@@ -17,7 +17,7 @@ ExecStart=/usr/sbin/varnishd <%= scope['::varnish::config::jail_opt'] %> \
 <% end -%>
   -f <%= scope['::varnish::vcl_conf'] %> \
   <%
-    if scope['::varnish::version_major'] == 3
+    if scope['::varnish::version_major'].to_i == 3
       sep = ','
     else
       sep = ' -a '
@@ -30,7 +30,7 @@ ExecStart=/usr/sbin/varnishd <%= scope['::varnish::config::jail_opt'] %> \
   -a <%= scope['::varnish::listen'] %>:<%= scope['::varnish::listen_port'] %> \
   <% end -%>
   -T <%= scope['::varnish::admin_listen'] %>:<%= scope['::varnish::admin_port'] %> \
-<% if scope['::varnish::version_major'] == '3' -%>
+<% if scope['::varnish::version_major'].to_i == '3' -%>
   -w <%= scope['::varnish::min_threads'] %>,<%= scope['::varnish::max_threads'] %>,<%= scope['::varnish::thread_timeout'] %> \
 <% else -%>
   -p thread_pool_min=<%= scope['::varnish::min_threads'] %> \
